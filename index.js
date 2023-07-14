@@ -1,26 +1,12 @@
 const redux = require('redux')
 const createStore = redux.createStore
 const bindActionCreators = redux.bindActionCreators
+const combineReducers = redux.combineReducers
 
 const CAKE_ORDERED = 'CAKE_ORDERED'
 const CAKE_RESTOCKED = 'CAKE_RESTOCKED'
 const ICECREAM_ORDERED = 'ICECREAM_ORDERED'
 const ICECREAM_RESTOCKED = 'ICECREAM_RESTOCKED'
-
-/*
-  Action
-  Action is an object with a type property 
-
-{
-  type: CAKE_ORDERED,
-  quantity: 1
-}
-*/
-
-/*
-  ActionCreator
-  ActionCreator is a function that returns an object 
-*/
 
 function orderCake() {
   return {
@@ -50,24 +36,20 @@ function restockIcecream(qty = 1) {
   }
 }
 
-const initialState = {
-  //previousState
+// const initialState = {
+//   //previousState
+//   numOfCakes: 10,
+//   numOfIcecreams: 20,
+// }
+
+const initialCakeState = {
   numOfCakes: 10,
+}
+const initialIceCreamState = {
   numOfIcecreams: 20,
 }
 
-/*
-  Reducer
-  (previousState, action) => newState
-  PreviousState + action returning a newState = Reducer
-
-  *) We store previousState in the state , here initialState is the previous state which is stored in the state
-  *) We refer action.type type property do perform an action using switch case
-  *) As a default we return the previous state
-  *) If there are multiple properties in the state copy the previous state (...state,) then perform the necessary actions without changing other properties
-*/
-
-const reducer = (state = initialState, action) => {
+const cakeReducer = (state = initialCakeState, action) => {
   switch (action.type) {
     case CAKE_ORDERED:
       return {
@@ -79,6 +61,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         numOfCakes: state.numOfCakes + action.payload,
       }
+    default:
+      return state
+  }
+}
+
+const iceCreamReducer = (state = initialIceCreamState, action) => {
+  switch (action.type) {
     case ICECREAM_ORDERED:
       return {
         ...state,
@@ -94,28 +83,23 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-/*
-  Redux store
-  *) createStore accepts the reducer function as a parameter 
-  *) reducer function contains the initialState of the application, which is necessary to make the state transactions by the store based on the actions received
-  *) getState allows access to the state
-  *) Registers listens via subscribe method
-  *) dispatch(action) allows the state to be updated
-*/
+//Combine Reducers
+const rootReducer = combineReducers({
+  cake: cakeReducer,
+  iceCream: iceCreamReducer,
+})
 
-const store = createStore(reducer)
+const store = createStore(rootReducer)
 console.log('Initial state', store.getState())
 
 const unsubscribe = store.subscribe(() =>
   console.log('Updated State ', store.getState())
 )
 
-// store.dispatch(orderCake())
-// store.dispatch(orderCake())
-// store.dispatch(orderCake())
-// store.dispatch(restockCake(3))
-
-const actions = bindActionCreators({ orderCake, restockCake, orderIcecream, restockIcecream }, store.dispatch)
+const actions = bindActionCreators(
+  { orderCake, restockCake, orderIcecream, restockIcecream },
+  store.dispatch
+)
 actions.orderCake()
 actions.orderCake()
 actions.orderCake()
