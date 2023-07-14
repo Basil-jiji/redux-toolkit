@@ -1,1 +1,5 @@
-# redux-toolkit
+# Redux Toolkit
+
+To Run,
+
+### `node index`
