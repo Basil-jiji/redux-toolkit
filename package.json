@@ -1,0 +1,20 @@
+{
+  "name": "redux-demo",
+  "version": "1.0.0",
+  "description": "To Learn redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Redux",
+    "React",
+    "State",
+    "Container"
+  ],
+  "author": "Basil jiji",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^4.2.1"
+  }
+}
