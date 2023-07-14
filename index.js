@@ -1,3 +1,6 @@
+const redux = require('redux')
+const createStore = redux.createStore
+
 const CAKE_ORDERED = 'CAKE_ORDERED'
 
 /*
@@ -10,9 +13,10 @@ const CAKE_ORDERED = 'CAKE_ORDERED'
 }
 */
 
-/* 
+/*
   ActionCreator
-  ActionCreator is a function that returns an object */
+  ActionCreator is a function that returns an object 
+*/
 
 function orderCake() {
   return {
@@ -48,3 +52,23 @@ const reducer = (state = initialState, action) => {
       return state
   }
 }
+
+/*
+  Redux store
+  *) createStore accepts the reducer function as a parameter 
+  *) reducer function contains the initialState of the application, which is necessary to make the state transactions by the store based on the actions received
+  *) getState allows access to the state
+  *) Registers listens via subscribe method
+  *) dispatch(action) allows the state to be updated
+*/
+
+const store = createStore(reducer)
+console.log('Initial state', store.getState());
+
+const unsubscribe = store.subscribe(()=>console.log('Updated State ',store.getState()))
+
+store.dispatch(orderCake())
+store.dispatch(orderCake())
+store.dispatch(orderCake())
+
+unsubscribe()
