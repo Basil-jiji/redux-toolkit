@@ -1,0 +1,19 @@
+{
+  "name": "rtk-demo",
+  "version": "1.0.0",
+  "description": "Redux ToolKit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Redux",
+    "ToolKit",
+    "RTK"
+  ],
+  "author": "Basil Jiji",
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5"
+  }
+}
